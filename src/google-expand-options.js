@@ -52,6 +52,7 @@ var searchMoreItems = document.getElementById('hdtb-more-mn');
 var searchTool = document.getElementById('hdtb-tls');
 var expandOnSearchPage = function() {
   var searchFilters = document.getElementsByClassName('hdtbU');
+  var searchToolDropMenu = document.getElementById('hdtbMenus');
   var rcnt = document.getElementById('rcnt');
   var slimAppbar = document.getElementById('slim_appbar');
   var centerCol = document.getElementById('center_col');
@@ -61,6 +62,10 @@ var expandOnSearchPage = function() {
   var rhs = document.getElementById('rhs');
   var i;
   var j;
+  var k;
+  var nd;
+  var ndLinks;
+  var ndLink;
   var item;
   var itemLink;
   var leftCol;
@@ -86,16 +91,44 @@ var expandOnSearchPage = function() {
   rhs.style.marginLeft = '782px';
 
   leftCol = document.createElement('div');
-  leftCol.style.className = 'col';
+  leftCol.className = 'geo-leftcol';
   leftCol.style.width = '200px';
   leftCol.style.float = 'left';
   leftCol.style.position = 'absolute';
 
   for (i = 0; i < searchFilters.length; ++i) {
     searchFilter = searchFilters.item(i).cloneNode(true);
-    searchFilter.className = '';
+    searchFilter.className = 'geo-ul';
+    searchFilter.style.marginBottom = '20px';
     for (j = 0; j < searchFilter.childNodes.length; ++j) {
-      searchFilter.childNodes[j].className = '';
+      nd = searchFilter.childNodes[j];
+      nd.className = 'geo-li';
+
+      ndLinks = nd.getElementsByTagName('a');
+      if (ndLinks.length) {
+        for (k = 0; k < ndLinks.length; ++k) {
+          ndLink = ndLinks.item(k);
+          ndLink.style.lineHeight = '17px';
+          ndLink.style.display = 'block';
+          ndLink.style.color = '#777';
+          ndLink.style.padding = '6px 44px 6px 30px';
+          ndLink.style.textDecoration = 'none';
+          ndLink.style.backgroundColor = 'inherit';
+          ndLink.onmouseover = function(e) {
+            e.target.style.backgroundColor = '#f1f1f1';
+          };
+          ndLink.onmouseout = function(e) {
+            e.target.style.backgroundColor = '#fff';
+          };
+        }
+      } else {
+        nd.style.lineHeight = '17px';
+        nd.style.display = 'block';
+        nd.style.padding = '6px 44px 6px 30px';
+        nd.style.textDecoration = 'none';
+        nd.style.color = '#DD4B39';
+        nd.style.fontWeight = 'bold';
+      }
     }
     leftCol.appendChild(searchFilter);
   }
@@ -104,7 +137,8 @@ var expandOnSearchPage = function() {
 
   removeElement(searchMore);
   removeElement(searchMoreItems);
-  // removeElement(searchTool);
+  removeElement(searchTool);
+  removeElement(searchToolDropMenu);
 };
 
 // Main
